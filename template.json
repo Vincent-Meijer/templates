@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "metricAlerts_CPU_Percentage__critical__description": {
-            "value": null
+            "value": "CPU critical"
         },
         "metricAlerts_CPU_Percentage__critical__name": {
-            "value": null
+            "value": "CPU Percentage (critical)"
         },
         "serverFarms_DEV_ASP01_externalid": {
             "value": null
