@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "metricAlerts_CPU_Percentage__critical__description": {
-            "value": null
+            "value": "CPU Percentge (Critical)"
         },
         "metricAlerts_CPU_Percentage__critical__name": {
-            "value": null
+            "value": "CPU Percentge (Critical)"
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "value": null
+            "value": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/resourceGroups/webhostingdienst/providers/Microsoft.Web/serverFarms/DEV-ASP01"
         }
     }
 }
