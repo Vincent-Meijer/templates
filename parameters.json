@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "metricAlerts_CPU_Percentage__critical__description": {
-            "value": []
+            "value": "test"
         },
         "metricAlerts_CPU_Percentage__critical__name": {
-            "value": []
+            "value": "test"
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "value": []
+            "value": "/test"
         }
     }
 }
