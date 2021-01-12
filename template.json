@@ -1,118 +1,53 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        
+        "metricAlerts_CPU_Percentage__warning__description": {
+            "type": "SecureString"
+        },
+        "metricAlerts_CPU_Percentage__warning__name": {
+            "defaultValue": "CPU Percentage (warning)",
+            "type": "String"
+        },
+        "serverFarms_DEV_ASP01_externalid": {
+            "defaultValue": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/resourceGroups/webhostingdienst/providers/Microsoft.Web/serverFarms/DEV-ASP01",
+            "type": "String"
+        }
     },
-    "variables": {
-        
-    },
+    "variables": {},
     "resources": [
         {
-            "name": "deploy-high-CPU-alertrule-for-app-serviceplans",
-            "type": "Microsoft.Authorization/policyDefinitions",
-            "apiVersion": "2018-05-01",
-            "location": "West Europe",
+            "type": "microsoft.insights/metricAlerts",
+            "apiVersion": "2018-03-01",
+            "name": "[parameters('metricAlerts_CPU_Percentage__warning__name')]",
+            "location": "global",
             "properties": {
-                "displayName": "Deploy high CPU alert rule for App Serviceplans",
-                "policyType": "Custom",
-                "mode": "All",
-                "parameters": {
-                    "cpu_threshold": {
-                        "type": "integer",
-                        "defaultValue": 90
-                    }
-                },
-                "policyRule": {
-                    "if": {
-                        "field": "type",
-                        "equals": "Microsoft.Web/serverfarms"
-                    },
-                    "then": {
-                        "effect": "DeployIfNotExists",
-                        "details": {
-                            "type": "microsoft.insights/metricAlerts",
-                            "resourceGroupName": "[[resourceGroup().name]",
-                            "existenceCondition": {
-                                "field": "name",
-                                "equals": "[[concat(field('Name'),'_App_ServicePlan_High_CPU')]"
-                            },
-                            "roleDefinitionIds": [
-                                "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa')]",
-                                "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b')]"
-                            ],
-                            "deployment": {
-                                "properties": {
-                                    "mode": "incremental",
-                                    "template": {
-                                        "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                                        "contentVersion": "1.0.0.0",
-                                        "parameters": {
-                                            "metricAlerts_name": {
-                                                "type": "String"
-                                            },
-                                            "serverFarms_externalid": {
-                                                "type": "String"
-                                            },
-                                        },
-                                        "variables": {},
-                                        "resources": [
-                                            {
-                                                "type": "microsoft.insights/metricAlerts",
-                                                "apiVersion": "2018-03-01",
-                                                "name": "[[parameters('metricAlerts_name')]",
-                                                "location": "global",
-                                                "properties": {
-                                                    "description": "App Service Plan has avergae CPU usage above 90% for the last 5 minutes",
-                                                    "severity": 3,
-                                                    "enabled": true,
-                                                    "scopes": [
-                                                        "[[parameters('web_serverFarms_externalid')]"
-                                                    ],
-                                                    "evaluationFrequency": "PT1M",
-                                                    "windowSize": "PT5M",
-                                                    "criteria": {
-                                                        "allOf": [
-                                                            {
-                                                                "threshold": "[[parameters('cpu_threshold')]",
-                                                                "name": "Metric1",
-                                                                "metricNamespace": "Microsoft.Web/serverFarms",
-                                                                "metricName": "CpuPercentage",
-                                                                "dimensions": [],
-                                                                "operator": "GreaterThan",
-                                                                "timeAggregation": "Average",
-                                                                "criterionType": "StaticThresholdCriterion"
-                                                            }
-                                                        ],
-                                                        "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria"
-                                                    },
-                                                    "autoMitigate": true,
-                                                    "targetResourceType": "Microsoft.Web/serverFarms",
-                                                    "targetResourceRegion": "westeurope",
-                                                    "actions": []
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    "parameters": {
-                                        "metricAlerts_name": {
-                                            "value": "[[concat(field('Name'),'_App_ServicePlan_High_CPU')]"
-                                        },
-                                        "web_serverFarms_externalid": {
-                                            "value": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/serverFarms/', field('fullName'))]"
-                                        },
-                                        "cpu_threshold": {
-                                            "value": "[[parameters('cpu_threshold')]"
-                                        }
-
-                                    }
-                                }
-                            }
+                "severity": 2,
+                "enabled": true,
+                "scopes": [
+                    "[parameters('serverFarms_DEV_ASP01_externalid')]"
+                ],
+                "evaluationFrequency": "PT1M",
+                "windowSize": "PT5M",
+                "criteria": {
+                    "allOf": [
+                        {
+                            "threshold": 90,
+                            "name": "Metric1",
+                            "metricNamespace": "Microsoft.Web/serverFarms",
+                            "metricName": "CpuPercentage",
+                            "operator": "GreaterThanOrEqual",
+                            "timeAggregation": "Average",
+                            "criterionType": "StaticThresholdCriterion"
                         }
-                    }
-                }
-            },
-            "id": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/providers/Microsoft.Authorization/policyDefinitions/test"
+                    ],
+                    "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria"
+                },
+                "autoMitigate": true,
+                "targetResourceType": "Microsoft.Web/serverFarms",
+                "actions": [],
+                "description": "[parameters('metricAlerts_CPU_Percentage__warning__description')]"
+            }
         }
     ]
 }
