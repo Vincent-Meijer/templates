@@ -6,10 +6,10 @@
             "value": "test"
         },
         "metricAlerts_CPU_Percentage__critical__name": {
-            "value": "null"
+            "value": "test"
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "value": ""
+            "value": "test"
         }
     }
 }
