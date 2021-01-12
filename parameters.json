@@ -9,7 +9,6 @@
             "value": "test"
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "value": "/test"
+            "value": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/resourceGroups/webhostingdienst/providers/microsoft.insights/metricalerts/test"
         }
-    }
 }
