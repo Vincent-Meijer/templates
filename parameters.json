@@ -3,12 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "metricAlerts_CPU_Percentage__critical__description": {
-            "value": "test"
+            "value": null
         },
         "metricAlerts_CPU_Percentage__critical__name": {
-            "value": "test"
+            "value": null
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "value": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/resourceGroups/webhostingdienst/providers/microsoft.insights/metricalerts/test"
+            "value": null
         }
+    }
 }
