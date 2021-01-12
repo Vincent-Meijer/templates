@@ -1,53 +1,15 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "metricAlerts_CPU_Percentage__warning__description": {
-            "type": "SecureString"
+        "metricAlerts_CPU_Percentage__critical__description": {
+            "value": null
         },
-        "metricAlerts_CPU_Percentage__warning__name": {
-            "defaultValue": "CPU Percentage (warning)",
-            "type": "String"
+        "metricAlerts_CPU_Percentage__critical__name": {
+            "value": null
         },
         "serverFarms_DEV_ASP01_externalid": {
-            "defaultValue": "/subscriptions/894cd085-d07c-4138-a9ba-d9a9a3746586/resourceGroups/webhostingdienst/providers/Microsoft.Web/serverFarms/DEV-ASP01",
-            "type": "String"
+            "value": null
         }
-    },
-    "variables": {},
-    "resources": [
-        {
-            "type": "microsoft.insights/metricAlerts",
-            "apiVersion": "2018-03-01",
-            "name": "[parameters('metricAlerts_CPU_Percentage__warning__name')]",
-            "location": "global",
-            "properties": {
-                "severity": 2,
-                "enabled": true,
-                "scopes": [
-                    "[parameters('serverFarms_DEV_ASP01_externalid')]"
-                ],
-                "evaluationFrequency": "PT1M",
-                "windowSize": "PT5M",
-                "criteria": {
-                    "allOf": [
-                        {
-                            "threshold": 90,
-                            "name": "Metric1",
-                            "metricNamespace": "Microsoft.Web/serverFarms",
-                            "metricName": "CpuPercentage",
-                            "operator": "GreaterThanOrEqual",
-                            "timeAggregation": "Average",
-                            "criterionType": "StaticThresholdCriterion"
-                        }
-                    ],
-                    "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria"
-                },
-                "autoMitigate": true,
-                "targetResourceType": "Microsoft.Web/serverFarms",
-                "actions": [],
-                "description": "[parameters('metricAlerts_CPU_Percentage__warning__description')]"
-            }
-        }
-    ]
+    }
 }
